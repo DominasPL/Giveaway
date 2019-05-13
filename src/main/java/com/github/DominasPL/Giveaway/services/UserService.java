@@ -1,6 +1,7 @@
 package com.github.DominasPL.Giveaway.services;
 
 
+import com.github.DominasPL.Giveaway.domain.entities.Role;
 import com.github.DominasPL.Giveaway.domain.entities.User;
 import com.github.DominasPL.Giveaway.domain.repositories.UserRepository;
 import com.github.DominasPL.Giveaway.dtos.RegistrationFormDTO;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,13 +20,26 @@ public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    private RoleService roleService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
+    }
+
+    @Transactional
+    public void registerUser(RegistrationFormDTO form) {
+
+        Role userRole = roleService.findUserRole();
+        User user = Converter.convertToUser(form);
+        List<Role> roles = user.getRoles();
+        roles.add(userRole);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+
     }
 
     public User findUserByEmail(String email) {
@@ -44,12 +59,4 @@ public class UserService {
 
     }
 
-    @Transactional
-    public void registerUser(RegistrationFormDTO form) {
-
-        User user = Converter.coonvertToUser(form);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-
-    }
 }
