@@ -16,7 +16,7 @@
 <body>
 
     <a href="">Zaloguj</a>
-    <a href="">Załóż konto</a>
+    <a href="/register">Załóż konto</a>
     <br>
     <a href="/">Start</a>
     <a href="/about-service">O co chodzi?</a>
