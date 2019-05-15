@@ -4,8 +4,9 @@ package com.github.DominasPL.Giveaway.services;
 import com.github.DominasPL.Giveaway.domain.entities.Role;
 import com.github.DominasPL.Giveaway.domain.entities.User;
 import com.github.DominasPL.Giveaway.domain.repositories.UserRepository;
+import com.github.DominasPL.Giveaway.dtos.AdminUserDTO;
+import com.github.DominasPL.Giveaway.dtos.InstitutionDTO;
 import com.github.DominasPL.Giveaway.dtos.RegistrationFormDTO;
-import com.github.DominasPL.Giveaway.web.controllers.RegistrationController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -57,10 +58,32 @@ public class UserService {
 
     }
 
-    public List<User> loadAllAdmins() {
+    public List<AdminUserDTO> loadAllAdmins() {
 
-        
+        List<User> allAdmins = userRepository.findAllAdmins();
+        if (allAdmins == null) {
+            logger.debug("Nie znaleziono adminów");
+            return null;
+        }
 
+        List<AdminUserDTO> adminsDTO = Converter.convertToAdminUserDTO(allAdmins);
+
+        return adminsDTO;
 
     }
+
+    public List<AdminUserDTO> loadAllUsers() {
+
+        List<User> allUsers = userRepository.findAllUsers();
+        if (allUsers == null) {
+            logger.debug("Nie znaleziono adminów");
+            return null;
+        }
+
+        List<AdminUserDTO> usersDTO = Converter.convertToAdminUserDTO(allUsers);
+
+        return usersDTO;
+
+    }
+
 }

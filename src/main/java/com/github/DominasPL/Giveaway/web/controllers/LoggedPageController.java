@@ -1,17 +1,14 @@
 package com.github.DominasPL.Giveaway.web.controllers;
 
 import com.github.DominasPL.Giveaway.services.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/login")
 public class LoggedPageController {
-
-    private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
     private UserService userService;
 
@@ -26,9 +23,8 @@ public class LoggedPageController {
     }
 
     @GetMapping("/admin")
-    public String displayAdminMainPage() {
+    public String displayAdminMainPage(Model model) {
 
-       userService.loadAllAdmins();
 
         return "logged-admin-page";
     }

@@ -46,13 +46,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll() // dostep dla wszystkich
                 .antMatchers("/user", "/user/**").hasRole("USER") // tylko dla userow
                 .antMatchers("/admin", "/admin/**").hasRole("ADMIN") // tylko dla adminow
+                .antMatchers("/media/**").permitAll()//dostep do folderu media dla wszystkich
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/login")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/form") // domyślna strona po zalogowaniu
+                .defaultSuccessUrl("/login/admin") // domyślna strona po zalogowaniu
                 .and()
             .logout()
                 .logoutUrl("/logout")
