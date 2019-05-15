@@ -32,6 +32,6 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private List<Choice> choices;
+    private List<Gift> gifts;
 
 }
