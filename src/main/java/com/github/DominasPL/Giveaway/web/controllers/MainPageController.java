@@ -14,25 +14,25 @@ public class MainPageController {
         return "index";
     }
 
-    @GetMapping("/about-service")
+    @GetMapping("about-service")
     public String showAboutService() {
 
         return "about-service";
     }
 
-    @GetMapping("/about-us")
+    @GetMapping("about-us")
     public String showAboutUs() {
 
         return "about-us";
     }
 
-    @GetMapping("/organizations")
+    @GetMapping("organizations")
     public String showOrganizations() {
 
         return "organizations";
     }
 
-    @GetMapping("/contact")
+    @GetMapping("contact")
     public String showContact() {
 
         return "contact";

@@ -34,9 +34,7 @@ public class UserService {
     public void registerUser(RegistrationFormDTO form) {
 
         Role userRole = roleService.findUserRole();
-        User user = Converter.convertToUser(form);
-        List<Role> roles = user.getRoles();
-        roles.add(userRole);
+        User user = Converter.convertToUser(form, userRole);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
@@ -59,4 +57,10 @@ public class UserService {
 
     }
 
+    public List<User> loadAllAdmins() {
+
+        
+
+
+    }
 }
