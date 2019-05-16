@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: dominik
-  Date: 5/14/19
-  Time: 7:52 PM
+  Date: 5/16/19
+  Time: 6:27 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page isELIgnored="false" %>
@@ -13,7 +13,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Strona glówna</title>
+    <title>Document</title>
     <link rel="stylesheet" href="/media/css/style.css" />
 </head>
 <body>
@@ -26,7 +26,7 @@
                     <li><a href="#">Profil</a></li>
                     <li><a href="#">Ustawienia</a></li>
                     <li><a href="#">Moje zbiórki</a></li>
-                    <li><a href="/logout">Wyloguj</a></li>
+                    <li><a href="#">Wyloguj</a></li>
                 </ul>
             </li>
         </ul>
@@ -437,4 +437,3 @@
 <script src="/media/js/app.js"></script>
 </body>
 </html>
-
