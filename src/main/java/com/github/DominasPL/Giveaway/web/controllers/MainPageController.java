@@ -1,15 +1,26 @@
 package com.github.DominasPL.Giveaway.web.controllers;
 
+import com.github.DominasPL.Giveaway.domain.entities.User;
+import com.github.DominasPL.Giveaway.services.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/")
 public class MainPageController {
 
+    private UserService userService;
+
+    public MainPageController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping
-    public String showMainPage() {
+    public String showMainPage(Model model) {
 
         return "index";
     }

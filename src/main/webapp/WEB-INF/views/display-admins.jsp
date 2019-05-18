@@ -35,13 +35,13 @@
                 <td>${adminStatus.count}</td>
                 <td>${admin.email}</td>
                 <td><a href="">Edycja</a></td>
-                <td><a href="">Usuń</a></td>
+                <td><a href="/admin/panel/admins/delete/${admin.email}">Usuń</a></td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <a class="btn btn-success" href="" role="button">Nowy admin</a>
-    <a class="btn btn-success" href="/login/admin" role="button">Powrót</a>
+    <a class="btn btn-success" href="/admin/panel/admins/add" role="button">Nowy admin</a>
+    <a class="btn btn-success" href="/admin/panel" role="button">Powrót</a>
 
 </div>
 </body>

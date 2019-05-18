@@ -7,7 +7,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Main Page</title>
     <link rel="stylesheet" href="/media/css/style.css" />
 </head>
 <body>
@@ -23,9 +23,9 @@
         <sec:authorize access="isAuthenticated()">
             <ul class="nav--actions">
                 <li class="logged-user">
-                    Witaj Agata
+                    Witaj ${firstName}
                     <ul class="dropdown">
-                        <li><a href="#">Profil</a></li>
+                        <li><a href="/profile">Profil</a></li>
                         <li><a href="#">Ustawienia</a></li>
                         <li><a href="#">Moje zbiórki</a></li>
                         <li><a href="/logout">Wyloguj</a></li>

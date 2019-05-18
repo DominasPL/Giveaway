@@ -16,10 +16,10 @@
 </head>
 <body>
 <h1>Panel administratora</h1>
-<a class="btn btn-success" href="/login/admin/admins" role="button">Admini</a>
-<a class="btn btn-success" href="/login/admin/users" role="button">Użytkownicy</a>
-<a class="btn btn-success" href="/login/admin/institutions" role="button">Instytucje</a>
-<a class="btn btn-success" href="/login/admin/gifts" role="button">Dary</a>
+<a class="btn btn-success" href="/admin/panel/admins" role="button">Admini</a>
+<a class="btn btn-success" href="/admin/panel" role="button">Użytkownicy</a>
+<a class="btn btn-success" href="/admin/panel" role="button">Instytucje</a>
+<a class="btn btn-success" href="/admin/panel" role="button">Dary</a>
 <a class="btn btn-success" href="/logout" role="button">Wyloguj</a>
 
 

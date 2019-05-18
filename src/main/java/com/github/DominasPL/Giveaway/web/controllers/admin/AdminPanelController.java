@@ -1,4 +1,4 @@
-package com.github.DominasPL.Giveaway.web.controllers;
+package com.github.DominasPL.Giveaway.web.controllers.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +12,9 @@ public class AdminPanelController {
     @GetMapping
     public String displayAdminMainPage(Model model) {
 
-
         return "admin-panel";
     }
+
+
 
 }

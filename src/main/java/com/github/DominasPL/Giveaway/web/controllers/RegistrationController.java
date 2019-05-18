@@ -2,6 +2,7 @@ package com.github.DominasPL.Giveaway.web.controllers;
 
 import com.github.DominasPL.Giveaway.domain.entities.User;
 import com.github.DominasPL.Giveaway.dtos.RegistrationFormDTO;
+import com.github.DominasPL.Giveaway.dtos.UserDTO;
 import com.github.DominasPL.Giveaway.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,9 +56,9 @@ public class RegistrationController {
     }
 
     public boolean checkEmailIsAvailable(RegistrationFormDTO form) {
-        User user = userService.findUserByEmail(form.getEmail());
+        UserDTO userDTO = userService.findUserByEmail(form.getEmail());
 
-        if (user == null) {
+        if (userDTO == null) {
             return true;
         }
 

@@ -2,14 +2,17 @@ package com.github.DominasPL.Giveaway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
+@EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -30,13 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery("SELECT email, password, true FROM users WHERE email = ?")
-//                .authoritiesByUsernameQuery("SELECT email, 'ROLE_USER' FROM users WHERE email = ?");
                 .authoritiesByUsernameQuery("SELECT email, role FROM users\n" +
                         "INNER JOIN users_roles ON users.id = users_roles.user_id\n" +
                         "INNER JOIN roles ON users_roles.role_id = roles.id\n" +
                         "WHERE users.email = ?;");
 
     }
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -49,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/organizations").permitAll() // dostep dla wszystkich
                 .antMatchers("/contact").permitAll() // dostep dla wszystkich
                 .antMatchers("/").permitAll() // dostep dla wszystkich
-                .antMatchers("/user", "/user/**").hasRole("USER") // tylko dla userow
+//                .antMatchers("/user", "/user/**").hasRole("USER") // tylko dla userow
                 .antMatchers("/admin", "/admin/**").hasRole("ADMIN") // tylko dla adminow
                 .antMatchers("/media/**").permitAll()//dostep do folderu media dla wszystkich
                 .anyRequest().authenticated()
@@ -58,18 +62,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/") // domyślna strona po zalogowaniu
+                .defaultSuccessUrl("/check-role") // domyślna strona po zalogowaniu
                 .and()
             .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/") // strona po wylogowaniu
                 .and()
             .csrf()
-                .disable()
-            .rememberMe()
-                .key("TajnyKluczremeberMe") // klucz uzyty do zaszyfrowania hasła użytkownika(nie wymagamy logowania, stworzenie ciastka zaszyfrowanego z uzyciem tego klucza)
-                .rememberMeParameter("remember-me")// mamy formularz logowania i checkbox
-                .tokenValiditySeconds(7*24*60*60); // czas życia ciasteczka
+                .disable();
 
     }
 }
