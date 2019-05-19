@@ -41,8 +41,8 @@
         </c:forEach>
         </tbody>
     </table>
-    <a class="btn btn-success" href="" role="button">Nowa instytucja</a>
-    <a class="btn btn-success" href="/login/admin" role="button">Powrót</a>
+    <a class="btn btn-success" href="/admin/panel/institutions/add" role="button">Nowa instytucja</a>
+    <a class="btn btn-success" href="/admin/panel" role="button">Powrót</a>
 
 </div>
 </body>

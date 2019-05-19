@@ -1,4 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: dominik
@@ -15,6 +17,8 @@
 <body>
 
 <form:form modelAttribute="form" method="post">
+    <form:errors path="*"/>
+    <form:hidden path="email"/>
     <div class="form-group">
         <label>Imie</label>
         <form:input class="form-control" placeholder="Podaj imie" path="firstName"/>
@@ -40,6 +44,20 @@
         <form:input class="form-control" placeholder="Podaj kod pocztowy" path="postalCode"/>
     </div>
     <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <c:choose>
+            <c:when test="${form.role=='ROLE_ADMIN'}">
+                <a class="btn btn-success" href="/admin/panel/admins" role="button">Powrót</a>
+            </c:when>
+            <c:otherwise>
+                <a class="btn btn-success" href="/admin/panel/users" role="button">Powrót</a>
+            </c:otherwise>
+        </c:choose>
+    </sec:authorize>
+    <sec:authorize access="hasRole('ROLE_USER')">
+        <a class="btn btn-success" href="/" role="button">Powrót</a>
+    </sec:authorize>
+
 </form:form>
 
 </body>

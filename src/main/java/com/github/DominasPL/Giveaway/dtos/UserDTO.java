@@ -19,5 +19,6 @@ public class UserDTO {
     private String street;
     private String streetNumber;
     private String postalCode;
+    private String role;
 
 }

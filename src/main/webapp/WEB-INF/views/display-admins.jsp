@@ -34,8 +34,8 @@
             <tr>
                 <td>${adminStatus.count}</td>
                 <td>${admin.email}</td>
-                <td><a href="">Edycja</a></td>
-                <td><a href="/admin/panel/admins/delete/${admin.email}">Usuń</a></td>
+                <td><a href="/admin/panel/admins/edit/${admin.id}">Edycja</a></td>
+                <td><a href="/admin/panel/admins/delete/${admin.id}">Usuń</a></td>
             </tr>
         </c:forEach>
         </tbody>

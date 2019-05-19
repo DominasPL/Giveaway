@@ -5,10 +5,7 @@ import com.github.DominasPL.Giveaway.domain.entities.Role;
 import com.github.DominasPL.Giveaway.domain.entities.User;
 import com.github.DominasPL.Giveaway.domain.entities.UserDetails;
 import com.github.DominasPL.Giveaway.domain.repositories.UserRepository;
-import com.github.DominasPL.Giveaway.dtos.AdminUserDTO;
-import com.github.DominasPL.Giveaway.dtos.RegistrationFormDTO;
-import com.github.DominasPL.Giveaway.dtos.UserDTO;
-import com.github.DominasPL.Giveaway.dtos.UserNameAndRoleDTO;
+import com.github.DominasPL.Giveaway.dtos.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,10 +62,30 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(String email) {
-        UserDTO userDTO = findUserByEmail(email);
-        User admin = Converter.convertToUser(userDTO);
+    public void deleteUser(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        User admin = optionalUser.orElse(null);
         userRepository.delete(admin);
+    }
+
+
+    @Transactional
+    public void editUserDetails(EditUserDTO form) {
+
+        Optional<User> optionalUser = userRepository.findByEmail(form.getEmail());
+        User user = optionalUser.orElse(null);
+        User editedUser = Converter.addUserPersonalDetails(form, user);
+        userRepository.save(editedUser);
+    }
+
+    public void editUserDetailsAdminPanel(EditUserDTO form, Long id) {
+
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.orElse(null);
+        User editedUser = Converter.addUserPersonalDetails(form, user);
+        userRepository.save(editedUser);
+
+
     }
 
     public UserDTO findUserByEmail(String email) {
@@ -137,8 +154,23 @@ public class UserService {
 
     }
 
-    public void editUserDetails() {
 
+    public UserDTO findUserById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id musi byc podane.");
+        }
+
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.orElse(null);
+
+        if (user == null) {
+            return null;
+        }
+
+        UserDTO userDTO = Converter.convertToUserDTO(user);
+
+        return userDTO;
 
     }
+
 }

@@ -7,6 +7,7 @@ import com.github.DominasPL.Giveaway.dtos.InstitutionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,14 @@ public class InstitutionService {
 
     public InstitutionService(InstitutionRepository institutionRepository) {
         this.institutionRepository = institutionRepository;
+    }
+
+    @Transactional
+    public void addInstitution(InstitutionDTO form) {
+
+        Institution institution = Converter.convertToInstitution(form);
+        institutionRepository.save(institution);
+
     }
 
 
@@ -35,4 +44,6 @@ public class InstitutionService {
         return institutionsDTO;
 
     }
+
+
 }

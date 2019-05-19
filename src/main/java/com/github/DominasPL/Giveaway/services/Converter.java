@@ -3,6 +3,7 @@ package com.github.DominasPL.Giveaway.services;
 import com.github.DominasPL.Giveaway.domain.entities.Institution;
 import com.github.DominasPL.Giveaway.domain.entities.Role;
 import com.github.DominasPL.Giveaway.domain.entities.User;
+import com.github.DominasPL.Giveaway.domain.entities.UserDetails;
 import com.github.DominasPL.Giveaway.dtos.*;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class Converter {
         List<AdminUserDTO> adminsOrUsersDTO = new ArrayList<>();
         for (User user: allAdmins) {
             AdminUserDTO adminDTO = new AdminUserDTO();
+            adminDTO.setId(user.getId());
             adminDTO.setEmail(user.getEmail());
             adminsOrUsersDTO.add(adminDTO);
         }
@@ -60,6 +62,7 @@ public class Converter {
         userDTO.setStreet(user.getUserDetails().getStreet());
         userDTO.setStreetNumber(user.getUserDetails().getStreetNumber());
         userDTO.setPostalCode(user.getUserDetails().getPostalCode());
+        userDTO.setRole(user.getRoles().get(0).getRole());
 
         return userDTO;
     }
@@ -70,5 +73,26 @@ public class Converter {
         user.setEmail(userDTO.getEmail());
 
         return user;
+    }
+
+
+    public static User addUserPersonalDetails(EditUserDTO form, User user) {
+        UserDetails userDetails = user.getUserDetails();
+        userDetails.setFirstName(form.getFirstName());
+        userDetails.setLastName(form.getLastName());
+        userDetails.setPhoneNumber(form.getPhoneNumber());
+        userDetails.setPostalCode(form.getPostalCode());
+        userDetails.setStreet(form.getStreet());
+        userDetails.setStreetNumber(form.getStreetNumber());
+
+        return user;
+
+    }
+
+    public static Institution convertToInstitution(InstitutionDTO form) {
+        Institution institution = new Institution();
+        institution.setName(form.getName());
+
+        return institution;
     }
 }

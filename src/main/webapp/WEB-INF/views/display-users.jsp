@@ -34,14 +34,14 @@
             <tr>
                 <td>${userStatus.count}</td>
                 <td>${user.email}</td>
-                <td><a href="">Edycja</a></td>
-                <td><a href="">Usuń</a></td>
+                <td><a href="/admin/panel/users/edit/${user.id}">Edycja</a></td>
+                <td><a href="/admin/panel/users/delete/${user.id}">Usuń</a></td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <a class="btn btn-success" href="" role="button">Nowy użytkownik</a>
-    <a class="btn btn-success" href="/login/admin" role="button">Powrót</a>
+    <a class="btn btn-success" href="/admin/panel/users/add" role="button">Nowy użytkownik</a>
+    <a class="btn btn-success" href="/admin/panel" role="button">Powrót</a>
 
 </div>
 </body>
