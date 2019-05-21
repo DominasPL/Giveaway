@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InstitutionService {
@@ -31,6 +32,25 @@ public class InstitutionService {
     }
 
 
+    @Transactional
+    public void deleteInstitution(Long id) {
+
+        Optional<Institution> optionalInstitution = institutionRepository.findById(id);
+        Institution institution = optionalInstitution.orElse(null);
+        institutionRepository.delete(institution);
+
+    }
+
+
+    @Transactional
+    public void editInstitution(InstitutionDTO form) {
+
+        Optional<Institution> optionalInstitution = institutionRepository.findById(form.getId());
+        Institution institution = optionalInstitution.orElse(null);
+        institution.setName(form.getName());
+        institutionRepository.save(institution);
+    }
+
     public List<InstitutionDTO> loadAllInstitutions() {
 
         List<Institution> allInstitutions = institutionRepository.findAll();
@@ -42,6 +62,27 @@ public class InstitutionService {
         List<InstitutionDTO> institutionsDTO = Converter.convertToInstitutionDTO(allInstitutions);
 
         return institutionsDTO;
+
+    }
+
+    public InstitutionDTO findInstitutionById(Long id) {
+
+        if (id == null) {
+            throw new IllegalArgumentException("Id musi być podane.");
+        }
+
+        Optional<Institution> optionalInstitution = institutionRepository.findById(id);
+
+        Institution institution = optionalInstitution.orElse(null);
+
+        if (institution == null) {
+            logger.debug("Nie znaleziono instytucji o id = " + id);
+            return null;
+        }
+
+        InstitutionDTO institutionDTO = Converter.convertToInstitutionDTO(institution);
+
+        return institutionDTO;
 
     }
 

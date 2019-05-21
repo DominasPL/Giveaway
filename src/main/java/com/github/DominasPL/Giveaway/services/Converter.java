@@ -36,6 +36,7 @@ public class Converter {
         List<InstitutionDTO> institutionsDTO = new ArrayList<>();
         for (Institution institution: allInstitutions) {
             InstitutionDTO institutionDTO = new InstitutionDTO();
+            institutionDTO.setId(institution.getId());
             institutionDTO.setName(institution.getName());
             institutionsDTO.add(institutionDTO);
         }
@@ -94,5 +95,14 @@ public class Converter {
         institution.setName(form.getName());
 
         return institution;
+    }
+
+    public static InstitutionDTO convertToInstitutionDTO(Institution institution) {
+
+        InstitutionDTO institutionDTO = new InstitutionDTO();
+        institutionDTO.setId(institution.getId());
+        institutionDTO.setName(institution.getName());
+
+        return institutionDTO;
     }
 }

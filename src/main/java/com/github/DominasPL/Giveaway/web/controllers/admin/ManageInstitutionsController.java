@@ -53,5 +53,39 @@ public class ManageInstitutionsController {
 
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteInstitution(@PathVariable("id") Long id) {
+
+        institutionService.deleteInstitution(id);
+
+        return "redirect:/admin/panel/institutions";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editInstitutionPrepareForm(@PathVariable("id") Long id, Model model) {
+
+        InstitutionDTO institutionDTO = institutionService.findInstitutionById(id);
+
+        model.addAttribute("form", institutionDTO);
+
+        return "edit-institution";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editInstitution(@PathVariable("id") Long id, @Valid @ModelAttribute("form") InstitutionDTO form, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "edit-institution";
+        }
+
+        institutionService.editInstitution(form);
+
+        //TODO WYSWIETLIC KOMUNIKAT PO POPRAWNEJ EDYCJI DANYCH
+
+
+        return "redirect:/admin/panel/institutions/edit/"+ id;
+
+    }
+
 }
 

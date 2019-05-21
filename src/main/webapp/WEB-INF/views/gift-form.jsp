@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: dominik
@@ -23,24 +24,24 @@
             <li class="logged-user">
                 Witaj Agata
                 <ul class="dropdown">
-                    <li><a href="#">Profil</a></li>
+                    <li><a href="/profile">Profil</a></li>
                     <li><a href="#">Ustawienia</a></li>
                     <li><a href="#">Moje zbiórki</a></li>
-                    <li><a href="#">Wyloguj</a></li>
+                    <li><a href="/logout">Wyloguj</a></li>
                 </ul>
             </li>
         </ul>
 
         <ul>
-            <li><a href="#" class="btn btn--without-border active">Start</a></li>
-            <li><a href="#" class="btn btn--without-border">O co chodzi?</a></li>
-            <li><a href="#" class="btn btn--without-border">O nas</a></li>
+            <li><a href="/" class="btn btn--without-border active">Start</a></li>
+            <li><a href="/about-service" class="btn btn--without-border">O co chodzi?</a></li>
+            <li><a href="/about-us" class="btn btn--without-border">O nas</a></li>
             <li>
-                <a href="#" class="btn btn--without-border"
+                <a href="/organizations" class="btn btn--without-border"
                 >Fundacje i organizacje</a
                 >
             </li>
-            <li><a href="#" class="btn btn--without-border">Kontakt</a></li>
+            <li><a href="/contact" class="btn btn--without-border">Kontakt</a></li>
         </ul>
     </nav>
 
@@ -98,9 +99,9 @@
         </div>
     </div>
 
+
     <div class="form--steps-container">
         <div class="form--steps-counter">Krok <span>1</span>/5</div>
-
         <form>
             <!-- STEP 1: class .active is switching steps -->
             <div data-step="1" class="active">
@@ -108,11 +109,7 @@
 
                 <div class="form-group form-group--checkbox">
                     <label>
-                        <input
-                                type="checkbox"
-                                name="products[]"
-                                value="clothes-to-use"
-                        />
+                        <input type="checkbox" name="products[]" value="clothes-to-use"/>
                         <span class="checkbox"></span>
                         <span class="description"
                         >ubrania, które nadają się do ponownego użycia</span

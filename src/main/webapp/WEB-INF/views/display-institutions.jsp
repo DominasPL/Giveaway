@@ -35,8 +35,8 @@
             <tr>
                 <td>${institutionStatus.count}</td>
                 <td>${institution.name}</td>
-                <td><a href="">Edycja</a></td>
-                <td><a href="">Usuń</a></td>
+                <td><a href="/admin/panel/institutions/edit/${institution.id}">Edycja</a></td>
+                <td><a href="/admin/panel/institutions/delete/${institution.id}">Usuń</a></td>
             </tr>
         </c:forEach>
         </tbody>

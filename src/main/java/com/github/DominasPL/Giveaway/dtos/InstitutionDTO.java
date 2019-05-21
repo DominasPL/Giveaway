@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class InstitutionDTO {
 
+    private Long id;
+
     @Size(min = 3, max = 100)
     @NotNull
     @NotBlank

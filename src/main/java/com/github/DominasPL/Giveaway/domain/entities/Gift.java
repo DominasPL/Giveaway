@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "gifts")
@@ -18,19 +20,26 @@ public class Gift {
     private Long id;
 
     @Column(nullable = false)
-    private String things;
-
-    @Column(nullable = false)
-    private Integer amount;
-
-    @Column(nullable = false)
-    private String location;
-
-    @Column(nullable = false)
-    private String supportTo;
+    private Long amount;
 
     @ManyToOne
     @JoinColumn(name = "insitution_id")
     private Institution institution;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "gift_id")
+    private List<Thing> things = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "gift_id")
+    private List<Group> groups = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
 }
