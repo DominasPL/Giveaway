@@ -1,9 +1,6 @@
 package com.github.DominasPL.Giveaway.services;
 
-import com.github.DominasPL.Giveaway.domain.entities.Institution;
-import com.github.DominasPL.Giveaway.domain.entities.Role;
-import com.github.DominasPL.Giveaway.domain.entities.User;
-import com.github.DominasPL.Giveaway.domain.entities.UserDetails;
+import com.github.DominasPL.Giveaway.domain.entities.*;
 import com.github.DominasPL.Giveaway.dtos.*;
 
 import java.util.ArrayList;
@@ -104,5 +101,48 @@ public class Converter {
         institutionDTO.setName(institution.getName());
 
         return institutionDTO;
+    }
+
+    public static List<GiftDTO> convertToGiftDTO(List<Gift> gifts) {
+
+        List<GiftDTO> giftsDTO = new ArrayList<>();
+
+        for (Gift gift: gifts) {
+            GiftDTO giftDTO = new GiftDTO();
+            giftDTO.setAmount(gift.getAmount());
+            giftDTO.setInstitution(gift.getInstitution());
+            giftDTO.setLocation(gift.getLocation());
+            giftDTO.setStreet(gift.getAddress().getStreet());
+            giftDTO.setPostalCode(gift.getAddress().getPostalCode());
+            giftDTO.setTown(gift.getAddress().getTown());
+            giftDTO.setPhoneNumber(gift.getAddress().getPhoneNumber());
+            giftDTO.setCreated(gift.getCreated());
+            giftDTO.setTaken(gift.getTaken());
+
+            List<String> giftDTOGroups = new ArrayList<>();
+            List<Group> giftGroups = gift.getGroups();
+
+            for (Group group: giftGroups) {
+                String name = group.getName();
+                giftDTOGroups.add(name);
+            }
+            giftDTO.setGroups(giftDTOGroups);
+
+            List<String> giftDTOThings = new ArrayList<>();
+            List<Thing> giftThings = gift.getThings();
+
+            for (Thing thing: giftThings) {
+                String name = thing.getName();
+                giftDTOThings.add(name);
+            }
+            giftDTO.setThings(giftDTOThings);
+
+            giftsDTO.add(giftDTO);
+
+        }
+
+        return giftsDTO;
+
+
     }
 }

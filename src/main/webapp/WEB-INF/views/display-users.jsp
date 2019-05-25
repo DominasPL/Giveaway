@@ -16,7 +16,6 @@
 </head>
 <body>
 
-<div id="table-ranking">
     <table>
         <thead>
         <tr>
@@ -43,6 +42,5 @@
     <a class="btn btn-success" href="/admin/panel/users/add" role="button">Nowy użytkownik</a>
     <a class="btn btn-success" href="/admin/panel" role="button">Powrót</a>
 
-</div>
 </body>
 </html>

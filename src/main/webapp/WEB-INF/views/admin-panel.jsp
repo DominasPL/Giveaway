@@ -19,7 +19,7 @@
 <a class="btn btn-success" href="/admin/panel/admins" role="button">Admini</a>
 <a class="btn btn-success" href="/admin/panel/users" role="button">Użytkownicy</a>
 <a class="btn btn-success" href="/admin/panel/institutions" role="button">Instytucje</a>
-<a class="btn btn-success" href="/admin/panel" role="button">Dary</a>
+<a class="btn btn-success" href="/admin/panel/gifts" role="button">Dary</a>
 <a class="btn btn-success" href="/logout" role="button">Wyloguj</a>
 
 

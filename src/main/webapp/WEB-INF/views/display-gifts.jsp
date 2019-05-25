@@ -10,39 +10,42 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Instytucje</title>
+    <title>Dary</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
 
-
     <table>
         <thead>
         <tr>
-            <th colspan="4" style="text-align: center">Instytucje</th>
+            <th colspan="7" style="text-align: center">Dary</th>
         </tr>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Nazwa instytucji</th>
-            <th scope="col">-</th>
-            <th scope="col">-</th>
+            <th scope="col">Utworzono</th>
+            <th scope="col">Odebrano</th>
+            <th scope="col">Ilość</th>
+            <th scope="col">Miasto</th>
+            <th scope="col">Instytucja</th>
+            <th scope="col">Rzeczy</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${institutions}" var="institution" varStatus="institutionStatus">
+        <c:forEach items="${gifts}" var="gift" varStatus="giftStatus">
             <tr>
-                <td>${institutionStatus.count}</td>
-                <td>${institution.name}</td>
-                <td><a href="/admin/panel/institutions/edit/${institution.id}">Edycja</a></td>
-                <td><a href="/admin/panel/institutions/delete/${institution.id}">Usuń</a></td>
+                <td>${giftStatus.count}</td>
+                <td>${gift.created}</td>
+                <td>${gift.taken}</td>
+                <td>${gift.amount}</td>
+                <td>${gift.town}</td>
+                <td>${gift.institution.name}</td>
+                <td>${gift.things}</td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <a class="btn btn-success" href="/admin/panel/institutions/add" role="button">Nowa instytucja</a>
     <a class="btn btn-success" href="/admin/panel" role="button">Powrót</a>
-
 
 </body>
 </html>

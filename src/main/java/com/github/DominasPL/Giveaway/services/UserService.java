@@ -2,10 +2,7 @@ package com.github.DominasPL.Giveaway.services;
 
 
 import com.github.DominasPL.Giveaway.domain.entities.*;
-import com.github.DominasPL.Giveaway.domain.repositories.GiftRepository;
-import com.github.DominasPL.Giveaway.domain.repositories.InstitutionRepository;
-import com.github.DominasPL.Giveaway.domain.repositories.ThingRepository;
-import com.github.DominasPL.Giveaway.domain.repositories.UserRepository;
+import com.github.DominasPL.Giveaway.domain.repositories.*;
 import com.github.DominasPL.Giveaway.dtos.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,17 +23,19 @@ public class UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private RoleService roleService;
-    private InstitutionRepository institutionRepository;
     private GiftRepository giftRepository;
-    private ThingRepository thingRepository;
+    private LocationRepository locationRepository;
+    private InstitutionRepository institutionRepository;
+    private AddressRepository addressRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, InstitutionRepository institutionRepository, GiftRepository giftRepository, ThingRepository thingRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, GiftRepository giftRepository, LocationRepository locationRepository, InstitutionRepository institutionRepository, AddressRepository addressRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
-        this.institutionRepository = institutionRepository;
         this.giftRepository = giftRepository;
-        this.thingRepository = thingRepository;
+        this.locationRepository = locationRepository;
+        this.institutionRepository = institutionRepository;
+        this.addressRepository = addressRepository;
     }
 
     @Transactional
@@ -97,20 +96,25 @@ public class UserService {
 
     }
 
-    @Transactional
-    public void saveGift(Principal principal, GiftDTO giftDTO) {
+    //TODO PRZENIESC DO GIFT SERVICE
+    public void saveGift(Principal principal, GiftDTO giftDTO, String date, String time) {
 
         Optional<User> optionalUser = userRepository.findByEmail(principal.getName());
         User user = optionalUser.orElse(null);
-        List<Institution> institutions = institutionRepository.findAll();
         List<Gift> gifts = user.getGifts();
+
         Gift gift = new Gift();
         gift.setAmount(giftDTO.getAmount());
-        gift.setLocation(giftDTO.getLocation());
-        gift.setInstitution(giftDTO.getInstitution());
+        gift.setTaken(date + " " + time);
+        gift.setComment(giftDTO.getComment());
 
-        //TODO USTAWIĆ ADRES ORAZ TERMIN PRZED ZAPISEM
+        Optional<Location> locationOptional = locationRepository.findById(giftDTO.getLocation().getId());
+        Location location = locationOptional.orElse(null);
+        gift.setLocation(location);
 
+        Optional<Institution> institutionOptional = institutionRepository.findById(giftDTO.getInstitution().getId());
+        Institution institution = institutionOptional.orElse(null);
+        gift.setInstitution(institution);
 
         List<Group> groups = gift.getGroups();
         for (String value: giftDTO.getGroups()) {
@@ -126,7 +130,22 @@ public class UserService {
             things.add(thing);
         }
 
+        giftRepository.save(gift);
+
+        Address address = new Address();
+        address.setId(gift.getId());
+        address.setStreet(giftDTO.getStreet());
+        address.setPhoneNumber(giftDTO.getPhoneNumber());
+        address.setPostalCode(giftDTO.getPostalCode());
+        address.setTown(giftDTO.getTown());
+        addressRepository.save(address);
+        gift.setAddress(address);
+
+        giftRepository.save(gift);
+
         gifts.add(gift);
+
+        userRepository.save(user);
 
     }
 

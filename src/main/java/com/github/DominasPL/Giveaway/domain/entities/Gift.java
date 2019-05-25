@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +41,25 @@ public class Gift {
     @JoinColumn(name = "gift_id")
     private List<Group> groups = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "address_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "id", name = "id")
     private Address address;
+
+    @Column(nullable = false)
+    private String created;
+
+    @Column(nullable = false)
+    private String taken;
+
+    @Column(nullable = false)
+    private String comment;
+
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formatDateTime = now.format(formatter);
+        this.created = formatDateTime;
+    }
 
 }

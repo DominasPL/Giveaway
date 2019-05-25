@@ -47,8 +47,10 @@
     Numer telefonu: <form:input path="phoneNumber"/> <br>
 
     <h1>Termin odbioru</h1>
-    Data: <form:input path="date"/> <br>
-    Godzina: <form:input path="hour"/> <br>
+    <label for="start">Data:</label>
+    <input type="date" id="start" name="date" min="2019-01-01" max="2020-12-31"> <br>
+    <label for="appt">Wybierz godzine:</label>
+    <input type="time" id="appt" min="6:00" name="time" max="20:00" required> <br>
     Uwagi dla kuriera: <form:textarea path="comment"/> <br>
 
     <input type="submit" value="Save">

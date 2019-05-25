@@ -1,13 +1,8 @@
 package com.github.DominasPL.Giveaway.web.controllers;
 
-import com.github.DominasPL.Giveaway.domain.entities.Gift;
-import com.github.DominasPL.Giveaway.domain.entities.Institution;
 import com.github.DominasPL.Giveaway.domain.entities.Location;
-import com.github.DominasPL.Giveaway.domain.repositories.GiftRepository;
-import com.github.DominasPL.Giveaway.domain.repositories.UserRepository;
 import com.github.DominasPL.Giveaway.dtos.GiftDTO;
 import com.github.DominasPL.Giveaway.dtos.InstitutionDTO;
-import com.github.DominasPL.Giveaway.dtos.UserDTO;
 import com.github.DominasPL.Giveaway.services.InstitutionService;
 import com.github.DominasPL.Giveaway.services.LocationService;
 import com.github.DominasPL.Giveaway.services.UserService;
@@ -15,13 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -49,9 +40,10 @@ public class GiftFormController {
     }
 
     @PostMapping
-    public String saveGift(Principal principal, @ModelAttribute("answers") GiftDTO things) {
+    public String saveGift(Principal principal, @ModelAttribute("answers") GiftDTO things, @RequestParam("date") String date, @RequestParam("time") String time) {
 
-        userService.saveGift(principal, things);
+        userService.saveGift(principal, things, date, time);
+
         //TODO ZAMIENIC USERSERVICE NA GIFTSERVICE
 
         return "redirect:/";
@@ -66,6 +58,7 @@ public class GiftFormController {
 
     @ModelAttribute("institutions")
     public List<InstitutionDTO> getInstitutions() {
+
 
         return institutionService.loadAllInstitutions();
     }

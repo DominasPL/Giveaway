@@ -15,8 +15,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-
-<div id="table-ranking">
     <table>
         <thead>
         <tr>
@@ -43,6 +41,5 @@
     <a class="btn btn-success" href="/admin/panel/admins/add" role="button">Nowy admin</a>
     <a class="btn btn-success" href="/admin/panel" role="button">Powrót</a>
 
-</div>
 </body>
 </html>

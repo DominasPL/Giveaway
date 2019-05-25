@@ -24,10 +24,11 @@ public class GiftDTO {
     private String town;
     private String postalCode;
     private String phoneNumber;
-    private String date;
-    private String hour;
     private String comment;
     private List<String> groups;
     private List<String> things;
+    //Do odczytu
+    private String created;
+    private String taken;
 
 }
