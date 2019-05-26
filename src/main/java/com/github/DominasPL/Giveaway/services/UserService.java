@@ -24,16 +24,16 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     private RoleService roleService;
     private GiftRepository giftRepository;
-    private LocationRepository locationRepository;
+    private LocationService locationService;
     private InstitutionRepository institutionRepository;
     private AddressRepository addressRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, GiftRepository giftRepository, LocationRepository locationRepository, InstitutionRepository institutionRepository, AddressRepository addressRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, GiftRepository giftRepository, LocationService locationService, InstitutionRepository institutionRepository, AddressRepository addressRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
         this.giftRepository = giftRepository;
-        this.locationRepository = locationRepository;
+        this.locationService = locationService;
         this.institutionRepository = institutionRepository;
         this.addressRepository = addressRepository;
     }
@@ -107,10 +107,7 @@ public class UserService {
         gift.setAmount(giftDTO.getAmount());
         gift.setTaken(date + " " + time);
         gift.setComment(giftDTO.getComment());
-
-        Optional<Location> locationOptional = locationRepository.findById(giftDTO.getLocation().getId());
-        Location location = locationOptional.orElse(null);
-        gift.setLocation(location);
+        gift.setLocation(locationService.findLocationById(giftDTO.getLocation().getId()));
 
         Optional<Institution> institutionOptional = institutionRepository.findById(giftDTO.getInstitution().getId());
         Institution institution = institutionOptional.orElse(null);
@@ -235,4 +232,21 @@ public class UserService {
     }
 
 
+    public UserDTOWithGifts findUserGiftsOnly(String email) {
+        if (email == null) {
+            throw new IllegalArgumentException("Email musi być podany");
+        }
+
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        User user = optionalUser.orElse(null);
+
+        if (user == null) {
+            return null;
+        }
+
+        UserDTOWithGifts userDTOWithGifts = Converter.convertToUserDTOWithGifts(user);
+
+        return userDTOWithGifts;
+
+    }
 }

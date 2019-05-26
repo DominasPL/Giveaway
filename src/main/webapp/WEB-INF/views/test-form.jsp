@@ -37,7 +37,7 @@
     Łukaszowi: <form:checkbox path="groups"
                           value="Łukasz"/> <br>
     <h1>Wybierz organizacje, której chcesz pomóc:</h1>
-    <form:select itemValue="id" itemLabel="name"
+    <form:radiobuttons itemValue="id" itemLabel="name"
                  path="institution.id" items="${institutions}"/> <br>
 
     <h1>Adres odbioru</h1>
@@ -53,7 +53,10 @@
     <input type="time" id="appt" min="6:00" name="time" max="20:00" required> <br>
     Uwagi dla kuriera: <form:textarea path="comment"/> <br>
 
+
     <input type="submit" value="Save">
+
+
 </form:form>
 
 </body>

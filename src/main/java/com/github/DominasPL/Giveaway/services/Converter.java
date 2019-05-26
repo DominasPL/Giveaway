@@ -145,4 +145,27 @@ public class Converter {
 
 
     }
+
+    public static List<UserGiftDTO> convertToUserGiftDTO(UserDTOWithGifts userDTOWithGifts) {
+
+        List<UserGiftDTO> userGiftDTOS = new ArrayList<>();
+        for (Gift gift:userDTOWithGifts.getGifts()) {
+
+            UserGiftDTO userGiftDTO = new UserGiftDTO();
+            userGiftDTO.setAmount(gift.getAmount());
+            userGiftDTO.setInstitution(gift.getInstitution().getName());
+            userGiftDTOS.add(userGiftDTO);
+        }
+
+        return userGiftDTOS;
+
+    }
+
+    public static UserDTOWithGifts convertToUserDTOWithGifts(User user) {
+
+        UserDTOWithGifts userDTOWithGifts = new UserDTOWithGifts();
+        userDTOWithGifts.setGifts(user.getGifts());
+
+        return userDTOWithGifts;
+    }
 }
