@@ -32,7 +32,6 @@ public class EditUserController {
     public String editPersonalDetailsForm(Principal principal, Model model) {
 
         UserDTO userDTO = userService.findUserByEmail(principal.getName());
-        logger.info(userDTO.toString());
 
         EditUserDTO editUserDTO = new EditUserDTO();
         editUserDTO.setEmail(userDTO.getEmail());

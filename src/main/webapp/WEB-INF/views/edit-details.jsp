@@ -49,6 +49,10 @@
             <form:input class="form-control" path="active"/>
         </div>
     </sec:authorize>
+
+    <a class="btn btn-success" href="/profile/change-password" role="button">Zmiana hasła</a> <br>
+
+
     <button type="submit" class="btn btn-primary btn-block">Submit</button>
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <c:choose>
