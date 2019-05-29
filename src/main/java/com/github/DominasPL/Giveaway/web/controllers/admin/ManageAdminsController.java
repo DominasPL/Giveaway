@@ -89,6 +89,7 @@ public class ManageAdminsController {
         editUserDTO.setRole(userDTO.getRole());
         editUserDTO.setActive(userDTO.getActive());
 
+        model.addAttribute("id", id);
         model.addAttribute("form", editUserDTO);
 
         return "edit-details";
@@ -109,6 +110,34 @@ public class ManageAdminsController {
 
     }
 
+    @GetMapping("/edit/{id}/change-password")
+    public String displayForm(@PathVariable("id") Long id, Model model) {
+
+
+        model.addAttribute("form", new ChangePasswordDTO());
+
+        return "change-password";
+
+    }
+
+    @PostMapping("/edit/{id}/change-password")
+    public String changeUserPassword(@PathVariable("id") Long id, @Valid @ModelAttribute("form") ChangePasswordDTO form, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "change-password";
+        }
+
+        if (!checkPasswordsEquality(form)) {
+            result.rejectValue("password", null, "Hasła są niezgodne");
+            return "change-password";
+        }
+
+        userService.changePassword(id, form);
+
+        return "redirect:/admin/panel/admins";
+
+    }
+
 
     public boolean checkEmailIsAvailable(RegistrationFormDTO form) {
         UserDTO userDTO = userService.findUserByEmail(form.getEmail());
@@ -124,19 +153,8 @@ public class ManageAdminsController {
         return form.getPassword().equals(form.getConfirmedPassword());
     }
 
-
-
-//
-//    @GetMapping("/institutions")
-//    public String displayInstitutions(Model model) {
-//
-//        List<InstitutionDTO> institutionsDTO = institutionService.loadAllInstitutions();
-//
-//        model.addAttribute("institutions", institutionsDTO);
-//
-//        return "display-institutions";
-//
-//    }
-
+    public boolean checkPasswordsEquality(ChangePasswordDTO form) {
+        return form.getPassword().equals(form.getConfirmedPassword());
+    }
 
 }

@@ -108,6 +108,17 @@ public class UserService {
 
     }
 
+
+    @Transactional
+    public void changePassword(Long id, ChangePasswordDTO form) {
+
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.orElse(null);
+        user.setPassword(passwordEncoder.encode(form.getPassword()));
+        userRepository.save(user);
+
+    }
+
     //TODO PRZENIESC DO GIFT SERVICE
     public void saveGift(Principal principal, GiftDTO giftDTO, String date, String time) {
 

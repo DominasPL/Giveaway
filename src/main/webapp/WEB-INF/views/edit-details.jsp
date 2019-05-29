@@ -50,7 +50,20 @@
         </div>
     </sec:authorize>
 
-    <a class="btn btn-success" href="/profile/change-password" role="button">Zmiana hasła</a> <br>
+    <sec:authorize access="hasRole('ROLE_USER')">
+        <a class="btn btn-success" href="/profile/change-password" role="button">Zmiana hasła</a> <br>
+    </sec:authorize>
+
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <c:choose>
+            <c:when test="${check=='users'}">
+                <a class="btn btn-success" href="/admin/panel/users/edit/${id}/change-password" role="button">Zmiana hasła</a> <br>
+            </c:when>
+            <c:otherwise>
+                <a class="btn btn-success" href="/admin/panel/admins/edit/${id}/change-password" role="button">Zmiana hasła</a> <br>
+            </c:otherwise>
+        </c:choose>
+    </sec:authorize>
 
 
     <button type="submit" class="btn btn-primary btn-block">Submit</button>

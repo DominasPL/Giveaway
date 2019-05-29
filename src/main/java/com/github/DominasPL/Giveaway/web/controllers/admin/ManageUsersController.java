@@ -1,9 +1,6 @@
 package com.github.DominasPL.Giveaway.web.controllers.admin;
 
-import com.github.DominasPL.Giveaway.dtos.AdminUserDTO;
-import com.github.DominasPL.Giveaway.dtos.EditUserDTO;
-import com.github.DominasPL.Giveaway.dtos.RegistrationFormDTO;
-import com.github.DominasPL.Giveaway.dtos.UserDTO;
+import com.github.DominasPL.Giveaway.dtos.*;
 import com.github.DominasPL.Giveaway.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,6 +74,7 @@ public class ManageUsersController {
     @GetMapping("/edit/{id}")
     public String editUserForm(@PathVariable("id") Long id, Model model) {
 
+        String check = "users";
         UserDTO userDTO = userService.findUserById(id);
 
         EditUserDTO editUserDTO = new EditUserDTO();
@@ -89,6 +87,8 @@ public class ManageUsersController {
         editUserDTO.setStreetNumber(userDTO.getStreetNumber());
         editUserDTO.setActive(userDTO.getActive());
 
+        model.addAttribute("id", id);
+        model.addAttribute("check", check);
         model.addAttribute("form", editUserDTO);
 
         return "edit-details";
@@ -109,6 +109,34 @@ public class ManageUsersController {
 
     }
 
+    @GetMapping("/edit/{id}/change-password")
+    public String displayForm(@PathVariable("id") Long id, Model model) {
+
+
+        model.addAttribute("form", new ChangePasswordDTO());
+
+        return "change-password";
+
+    }
+
+    @PostMapping("/edit/{id}/change-password")
+    public String changeUserPassword(@PathVariable("id") Long id, @Valid @ModelAttribute("form") ChangePasswordDTO form, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "change-password";
+        }
+
+        if (!checkPasswordsEquality(form)) {
+            result.rejectValue("password", null, "Hasła są niezgodne");
+            return "change-password";
+        }
+
+        userService.changePassword(id, form);
+
+        return "redirect:/admin/panel/users";
+
+    }
+
 
     public boolean checkEmailIsAvailable(RegistrationFormDTO form) {
         UserDTO userDTO = userService.findUserByEmail(form.getEmail());
@@ -124,6 +152,9 @@ public class ManageUsersController {
         return form.getPassword().equals(form.getConfirmedPassword());
     }
 
+    public boolean checkPasswordsEquality(ChangePasswordDTO form) {
+        return form.getPassword().equals(form.getConfirmedPassword());
+    }
 
 
 }
