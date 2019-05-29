@@ -43,6 +43,12 @@
         <label>Kod pocztowy</label>
         <form:input class="form-control" placeholder="Podaj kod pocztowy" path="postalCode"/>
     </div>
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <div class="form-group">
+            <label>Aktywny</label>
+            <form:input class="form-control" path="active"/>
+        </div>
+    </sec:authorize>
     <button type="submit" class="btn btn-primary btn-block">Submit</button>
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <c:choose>

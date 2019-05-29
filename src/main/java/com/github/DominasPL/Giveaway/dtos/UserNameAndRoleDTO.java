@@ -11,5 +11,5 @@ public class UserNameAndRoleDTO {
 
     private String firstName;
     private String role;
-
+    private Boolean active;
 }

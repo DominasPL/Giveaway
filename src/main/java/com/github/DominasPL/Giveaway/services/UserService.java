@@ -87,11 +87,12 @@ public class UserService {
     }
 
     @Transactional
-    public void editUserDetailsAdminPanel(EditUserDTO form, Long id) {
+    public void editUserDetailsAdminPanel(EditUserDTO form, Long id, Boolean active) {
 
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
         User editedUser = Converter.addUserPersonalDetails(form, user);
+        user.setActive(active);
         userRepository.save(editedUser);
 
     }

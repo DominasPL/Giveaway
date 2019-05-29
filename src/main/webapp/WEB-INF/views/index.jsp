@@ -27,7 +27,7 @@
                     <ul class="dropdown">
                         <li><a href="/profile">Profil</a></li>
                         <li><a href="#">Ustawienia</a></li>
-                        <li><a href="/my-gifts">Moje zbiórki</a></li>
+                        <li><a href="/my-gifts">Moje dary</a></li>
                         <li><a href="/logout">Wyloguj</a></li>
                     </ul>
                 </li>

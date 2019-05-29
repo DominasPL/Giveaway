@@ -15,6 +15,7 @@ public class EditUserDTO {
 
     private String email;
     private String role;
+    private Boolean active;
 
     @Size(min = 3, max = 30)
     private String firstName;

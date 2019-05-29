@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GiftService {
@@ -43,7 +44,7 @@ public class GiftService {
 
     public List<UserGiftDTO> findUserGifts(String email) {
         if (email == null) {
-            throw new IllegalArgumentException("Id musi być podane");
+            throw new IllegalArgumentException("Email musi być podane");
         }
 
         UserDTOWithGifts userDTOWithGifts = userService.findUserGiftsOnly(email);
@@ -56,6 +57,26 @@ public class GiftService {
         List<UserGiftDTO> userGiftDTOS = Converter.convertToUserGiftDTO(userDTOWithGifts);
 
         return userGiftDTOS;
+
+    }
+
+    public GiftDTO findGiftById(Long id) {
+
+        if (id == null) {
+            throw new IllegalArgumentException("Id musi być podane");
+        }
+
+        Optional<Gift> optionalGift = giftRepository.findById(id);
+        Gift gift = optionalGift.orElse(null);
+
+        if (gift == null) {
+            logger.debug("Nie znaelziono daru");
+            return null;
+        }
+
+        GiftDTO giftDTO = Converter.convertToGiftDTO(gift);
+
+        return giftDTO;
 
     }
 }

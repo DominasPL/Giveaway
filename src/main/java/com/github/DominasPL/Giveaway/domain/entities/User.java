@@ -25,6 +25,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private Boolean active;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id", name = "id")
     private UserDetails userDetails;

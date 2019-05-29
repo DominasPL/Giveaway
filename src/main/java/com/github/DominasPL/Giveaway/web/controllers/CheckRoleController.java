@@ -23,9 +23,16 @@ public class CheckRoleController {
     public String checkRole(Principal principal, Model model) {
 
         UserNameAndRoleDTO userDTO = userService.findUserNameAndRole(principal.getName());
-            if (userDTO.getRole().equals("ROLE_ADMIN")) {
-                return "redirect:/admin/panel";
-            }
+
+        if (!userDTO.getActive()) {
+            //TODO WYSWIETLIC KOMUNIKAT ZE KONTO JSET NIEAKTYWNE
+            return "redirect:/logout";
+
+        }
+
+        if (userDTO.getRole().equals("ROLE_ADMIN")) {
+            return "redirect:/admin/panel";
+        }
 
         model.addAttribute("firstName", userDTO.getFirstName());
 

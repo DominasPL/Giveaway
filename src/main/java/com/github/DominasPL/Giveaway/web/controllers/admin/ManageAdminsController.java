@@ -87,6 +87,7 @@ public class ManageAdminsController {
         editUserDTO.setStreet(userDTO.getStreet());
         editUserDTO.setStreetNumber(userDTO.getStreetNumber());
         editUserDTO.setRole(userDTO.getRole());
+        editUserDTO.setActive(userDTO.getActive());
 
         model.addAttribute("form", editUserDTO);
 
@@ -94,13 +95,13 @@ public class ManageAdminsController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editAdmin(@PathVariable("id") Long id, @Valid @ModelAttribute("form") EditUserDTO form, BindingResult result) {
+    public String editAdmin(@RequestParam("active") Boolean active, @PathVariable("id") Long id, @Valid @ModelAttribute("form") EditUserDTO form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "edit-details";
         }
 
-        userService.editUserDetailsAdminPanel(form, id);
+        userService.editUserDetailsAdminPanel(form, id, active);
 
         //TODO WYSWIETLIC KOMUNIKAT PO POPRAWNEJ EDYCJI DANYCH
 

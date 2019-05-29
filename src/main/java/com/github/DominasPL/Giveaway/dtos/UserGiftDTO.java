@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserGiftDTO {
 
+    private Long id;
     private Long amount;
     private String institution;
 

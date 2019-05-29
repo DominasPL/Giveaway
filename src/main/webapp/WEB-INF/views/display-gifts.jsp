@@ -38,7 +38,7 @@
                 <td>${gift.created}</td>
                 <td>${gift.taken}</td>
                 <td>${gift.amount}</td>
-                <td>${gift.town}</td>
+                <td>${gift.location.name}</td>
                 <td>${gift.institution.name}</td>
                 <td>${gift.things}</td>
             </tr>

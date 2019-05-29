@@ -3,6 +3,7 @@ package com.github.DominasPL.Giveaway.web.controllers;
 import com.github.DominasPL.Giveaway.domain.entities.Gift;
 import com.github.DominasPL.Giveaway.domain.entities.User;
 import com.github.DominasPL.Giveaway.domain.repositories.GiftRepository;
+import com.github.DominasPL.Giveaway.dtos.GiftDTO;
 import com.github.DominasPL.Giveaway.dtos.UserDTO;
 import com.github.DominasPL.Giveaway.dtos.UserGiftDTO;
 import com.github.DominasPL.Giveaway.services.GiftService;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
@@ -37,6 +39,17 @@ public class UserGiftController {
         model.addAttribute("gifts", userGifts);
 
         return "user-gifts";
+
+    }
+
+    @GetMapping("/{id}")
+    public String displayGiftDetails(@PathVariable("id") Long id, Model model) {
+
+        GiftDTO giftDTO = giftService.findGiftById(id);
+
+        model.addAttribute("gift", giftDTO);
+
+        return "gift-details";
 
     }
 

@@ -1,5 +1,6 @@
 package com.github.DominasPL.Giveaway.dtos;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,6 @@ public class UserDTO {
     private String streetNumber;
     private String postalCode;
     private String role;
+    private Boolean active;
 
 }

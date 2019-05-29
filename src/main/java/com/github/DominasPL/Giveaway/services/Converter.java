@@ -12,6 +12,7 @@ public class Converter {
         User user = new User();
         user.setEmail(form.getEmail());
         user.setPassword(form.getPassword());
+        user.setActive(true);
         List<Role> roles = user.getRoles();
         roles.add(userRole);
         return user;
@@ -45,6 +46,7 @@ public class Converter {
         UserNameAndRoleDTO userDTO = new UserNameAndRoleDTO();
         userDTO.setFirstName(user.getUserDetails().getFirstName());
         userDTO.setRole(user.getRoles().get(0).getRole());
+        userDTO.setActive(user.getActive());
 
         return userDTO;
 
@@ -61,6 +63,7 @@ public class Converter {
         userDTO.setStreetNumber(user.getUserDetails().getStreetNumber());
         userDTO.setPostalCode(user.getUserDetails().getPostalCode());
         userDTO.setRole(user.getRoles().get(0).getRole());
+        userDTO.setActive(user.getActive());
 
         return userDTO;
     }
@@ -152,6 +155,7 @@ public class Converter {
         for (Gift gift:userDTOWithGifts.getGifts()) {
 
             UserGiftDTO userGiftDTO = new UserGiftDTO();
+            userGiftDTO.setId(gift.getId());
             userGiftDTO.setAmount(gift.getAmount());
             userGiftDTO.setInstitution(gift.getInstitution().getName());
             userGiftDTOS.add(userGiftDTO);
@@ -167,5 +171,41 @@ public class Converter {
         userDTOWithGifts.setGifts(user.getGifts());
 
         return userDTOWithGifts;
+    }
+
+    public static GiftDTO convertToGiftDTO(Gift gift) {
+
+        GiftDTO giftDTO = new GiftDTO();
+        giftDTO.setAmount(gift.getAmount());
+        giftDTO.setLocation(gift.getLocation());
+        giftDTO.setInstitution(gift.getInstitution());
+        giftDTO.setStreet(gift.getAddress().getStreet());
+        giftDTO.setTown(gift.getAddress().getTown());
+        giftDTO.setPostalCode(gift.getAddress().getPostalCode());
+        giftDTO.setPhoneNumber(gift.getAddress().getPhoneNumber());
+        giftDTO.setComment(gift.getComment());
+        giftDTO.setCreated(gift.getCreated());
+        giftDTO.setTaken(gift.getTaken());
+
+        List<String> groupsName = new ArrayList<>();
+
+        for (Group group:gift.getGroups()) {
+            String name = group.getName();
+            groupsName.add(name);
+        }
+
+        giftDTO.setGroups(groupsName);
+
+        List<String> thingsName = new ArrayList<>();
+
+        for (Thing thing:gift.getThings()) {
+            String name = thing.getName();
+            thingsName.add(name);
+        }
+
+        giftDTO.setThings(thingsName);
+
+        return giftDTO;
+
     }
 }
