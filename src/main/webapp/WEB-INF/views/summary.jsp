@@ -78,30 +78,29 @@
                 <h4>Oddajesz:</h4>
                 <ul>
                     <li>
-                        ${summary.amount} worki ubrań
+                        ${gift.amount} worki ubrań
                     </li>
 
                     <li>
                         <span class="icon icon-hand"></span>
                         <span class="summary--text"
-                        >Dla fundacji "${summary.name}" w Warszawie</span
+                        >Dla fundacji "${gift.institution.name}" w Warszawie</span
                         >
                     </li>
                 </ul>
 
                     <h4>Adres odbioru:</h4>
                     <ul>
-                        <li>${summary.street}</li>
-                        <li>${summary.town}</li>
-                        <li>${summary.postalCode}</li>
-                        <li>${summary.phoneNumber}</li>
+                        <li>${gift.street}</li>
+                        <li>${gift.town}</li>
+                        <li>${gift.postalCode}</li>
+                        <li>${gift.phoneNumber}</li>
                     </ul>
 
                     <h4>Termin odbioru:</h4>
                     <ul>
-                        <li>${summary.date}</li>
-                        <li>${summary.time}</li>
-                        <li>${summary.comment}</li>
+                        <li>${gift.taken}</li>
+                        <li>${gift.comment}</li>
                     </ul>
 
 

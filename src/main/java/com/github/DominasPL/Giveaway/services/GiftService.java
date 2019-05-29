@@ -2,10 +2,7 @@ package com.github.DominasPL.Giveaway.services;
 
 import com.github.DominasPL.Giveaway.domain.entities.Gift;
 import com.github.DominasPL.Giveaway.domain.repositories.GiftRepository;
-import com.github.DominasPL.Giveaway.dtos.GiftDTO;
-import com.github.DominasPL.Giveaway.dtos.UserDTO;
-import com.github.DominasPL.Giveaway.dtos.UserDTOWithGifts;
-import com.github.DominasPL.Giveaway.dtos.UserGiftDTO;
+import com.github.DominasPL.Giveaway.dtos.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -79,4 +76,21 @@ public class GiftService {
         return giftDTO;
 
     }
+
+    public Long findGiftId() {
+
+        Optional<Gift> optionalGift = giftRepository.findLastGift();
+        Gift gift = optionalGift.orElse(null);
+
+        if (gift == null) {
+            logger.debug("Nie znaleziono daru");
+            return null;
+        }
+
+        return gift.getId();
+
+    }
+
+
+
 }

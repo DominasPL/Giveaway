@@ -4,6 +4,7 @@ import com.github.DominasPL.Giveaway.domain.entities.Location;
 import com.github.DominasPL.Giveaway.dtos.GiftDTO;
 import com.github.DominasPL.Giveaway.dtos.InstitutionDTO;
 import com.github.DominasPL.Giveaway.dtos.SummaryDTO;
+import com.github.DominasPL.Giveaway.services.GiftService;
 import com.github.DominasPL.Giveaway.services.InstitutionService;
 import com.github.DominasPL.Giveaway.services.LocationService;
 import com.github.DominasPL.Giveaway.services.UserService;
@@ -26,11 +27,13 @@ public class GiftFormController {
     private UserService userService;
     private LocationService locationService;
     private InstitutionService institutionService;
+    private GiftService giftService;
 
-    public GiftFormController(UserService userService, LocationService locationService, InstitutionService institutionService) {
+    public GiftFormController(UserService userService, LocationService locationService, InstitutionService institutionService, GiftService giftService) {
         this.userService = userService;
         this.locationService = locationService;
         this.institutionService = institutionService;
+        this.giftService = giftService;
     }
 
     @GetMapping
@@ -46,48 +49,20 @@ public class GiftFormController {
 
         userService.saveGift(principal, things, date, time);
 
+        Long id = giftService.findGiftId();
 
-        InstitutionDTO institutionById = institutionService.findInstitutionById(things.getInstitution().getId());
 
         //TODO ZAMIENIC USERSERVICE NA GIFTSERVICE
 
-        return "redirect:/gift/summary/"
-                +things.getAmount()+"/"
-                +institutionById.getName()+"/"
-                +things.getStreet()+"/"
-                +things.getTown()+"/"
-                +things.getPostalCode()+"/"
-                +things.getPhoneNumber()+"/"
-                +date+"/"
-                +time+"/"
-                +things.getComment();
+        return "redirect:/gift/"+ id +"/summary";
     }
 
-    @GetMapping("/summary/{amount}/{name}/{street}/{town}/{postalCode}/{phoneNumber}/{date}/{time}/{comment}")
-    public String displaySummary(@PathVariable("amount") Long amount,
-                                 @PathVariable("name") String name,
-                                 @PathVariable("street") String street,
-                                 @PathVariable("town") String town,
-                                 @PathVariable("postalCode") String postalCode,
-                                 @PathVariable("phoneNumber") String phoneNumber,
-                                 @PathVariable("date") String date,
-                                 @PathVariable("time") String time,
-                                 @PathVariable("comment") String comment, Model model) {
+    @GetMapping("/{id}/summary")
+    public String displaySummary(@PathVariable("id") Long id, Model model) {
 
-        SummaryDTO summaryDTO = new SummaryDTO();
-        summaryDTO.setAmount(amount);
-        summaryDTO.setName(name);
-        summaryDTO.setStreet(street);
-        summaryDTO.setTown(town);
-        summaryDTO.setPostalCode(postalCode);
-        summaryDTO.setPhoneNumber(phoneNumber);
-        summaryDTO.setDate(date);
-        summaryDTO.setTime(time);
-        summaryDTO.setComment(comment);
+        GiftDTO gift = giftService.findGiftById(id);
 
-        //TODO polskie znaki url
-
-        model.addAttribute("summary", summaryDTO);
+        model.addAttribute("gift", gift);
 
         return "summary";
 
