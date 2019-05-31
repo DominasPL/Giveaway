@@ -66,7 +66,14 @@ public class ManageAdminsController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteAdmin(@PathVariable("id") Long id) {
+    public String deleteAdmin(@PathVariable("id") Long id, Principal principal) {
+
+        UserDTO loggedAdmin = userService.findUserByEmail(principal.getName());
+
+        if (loggedAdmin.getId() == id) {
+            //TODO WYSWIETLIC INFO ZE NIE MOZNA USUNAC SAMEGO SIEBIE
+            return "redirect:/admin/panel";
+        }
 
         userService.deleteUser(id);
 

@@ -16,9 +16,9 @@ public class RegistrationFormDTO {
 
     @Email
     private String email;
-    @NotNull @Size(min = 3, max = 20)
+    @NotNull @Size(min = 8, max = 20)
     private String password;
-    @NotNull @Size(min = 3, max = 20)
+    @NotNull @Size(min = 8, max = 20)
     private String confirmedPassword;
 
 
