@@ -130,6 +130,7 @@ public class UserService {
         gift.setAmount(giftDTO.getAmount());
         gift.setTaken(date + " " + time);
         gift.setComment(giftDTO.getComment());
+        gift.setReceived(false);
         gift.setLocation(locationService.findLocationById(giftDTO.getLocation().getId()));
 
         Optional<Institution> institutionOptional = institutionRepository.findById(giftDTO.getInstitution().getId());

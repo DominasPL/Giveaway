@@ -160,6 +160,7 @@ public class Converter {
             userGiftDTO.setInstitution(gift.getInstitution().getName());
             userGiftDTO.setTaken(gift.getTaken());
             userGiftDTO.setCreated(gift.getCreated());
+            userGiftDTO.setReceived(gift.getReceived());
             userGiftDTOS.add(userGiftDTO);
 
         }
@@ -210,5 +211,14 @@ public class Converter {
 
         return giftDTO;
 
+    }
+
+    public static StatusDTO convertToStatusDTO(Gift gift) {
+
+        StatusDTO statusDTO = new StatusDTO();
+        statusDTO.setId(gift.getId());
+        statusDTO.setReceived(gift.getReceived());
+
+        return statusDTO;
     }
 }

@@ -23,9 +23,10 @@
     <tr>
         <th scope="col">#</th>
         <th scope="col">Data utworzenia</th>
-        <th scope="col">Data odebrania</th>
         <th scope="col">Ilość worków</th>
         <th scope="col">Instytucja</th>
+        <th scope="col">Data odebrania</th>
+        <th scope="col">Czy odebrany</th>
     </tr>
     </thead>
     <tbody>
@@ -33,10 +34,12 @@
         <tr>
             <td>${giftStatus.count}</td>
             <td>${gift.created}</td>
-            <td>${gift.taken}</td>
             <td>${gift.amount}</td>
             <td>${gift.institution}</td>
-            <td><a href="/my-gifts/${gift.id}">Więcej informacji</a></td>
+            <td>${gift.taken}</td>
+            <td>${gift.received}</td>
+            <td><a class="btn btn-primary" href="/my-gifts/${gift.id}">Więcej informacji</a></td>
+            <td><a class="btn btn-success" href="/my-gifts/${gift.id}/change-status">Zmiana statusu</a></td>
         </tr>
     </c:forEach>
     </tbody>

@@ -1,16 +1,17 @@
 package com.github.DominasPL.Giveaway.web.controllers;
 
 import com.github.DominasPL.Giveaway.dtos.GiftDTO;
+import com.github.DominasPL.Giveaway.dtos.StatusDTO;
 import com.github.DominasPL.Giveaway.dtos.UserGiftDTO;
 import com.github.DominasPL.Giveaway.services.GiftService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -56,6 +57,30 @@ public class UserGiftController {
         model.addAttribute("gift", giftDTO);
 
         return "gift-details";
+
+    }
+
+    @GetMapping("/{id}/change-status")
+    public String displayStatusForm(@PathVariable("id") Long id, Model model) {
+
+        StatusDTO statusDTO = giftService.findGiftIdAndStatus(id);
+
+        model.addAttribute("status", statusDTO);
+
+        return "status-form";
+
+    }
+
+    @PostMapping("/{id}/change-status")
+    public String saveStatus(@Valid @ModelAttribute("status") StatusDTO status, @PathVariable("id") Long id, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "status-form";
+        }
+
+        giftService.editStatus(status);
+
+        return "redirect:/my-gifts";
 
     }
 

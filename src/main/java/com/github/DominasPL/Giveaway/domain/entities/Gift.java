@@ -25,6 +25,18 @@ public class Gift {
     @Column(nullable = false)
     private Long amount;
 
+    @Column(nullable = false)
+    private String created;
+
+    @Column(nullable = false)
+    private String taken;
+
+    @Column(nullable = false)
+    private String comment;
+
+    @Column(nullable = false)
+    private Boolean received;
+
     @ManyToOne
     @JoinColumn(name = "insitution_id")
     private Institution institution;
@@ -45,14 +57,7 @@ public class Gift {
     @JoinColumn(referencedColumnName = "id", name = "id")
     private Address address;
 
-    @Column(nullable = false)
-    private String created;
 
-    @Column(nullable = false)
-    private String taken;
-
-    @Column(nullable = false)
-    private String comment;
 
     @PrePersist
     public void prePersist() {
