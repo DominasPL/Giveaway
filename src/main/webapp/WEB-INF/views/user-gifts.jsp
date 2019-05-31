@@ -22,6 +22,8 @@
     </tr>
     <tr>
         <th scope="col">#</th>
+        <th scope="col">Data utworzenia</th>
+        <th scope="col">Data odebrania</th>
         <th scope="col">Ilość worków</th>
         <th scope="col">Instytucja</th>
     </tr>
@@ -30,6 +32,8 @@
     <c:forEach items="${gifts}" var="gift" varStatus="giftStatus">
         <tr>
             <td>${giftStatus.count}</td>
+            <td>${gift.created}</td>
+            <td>${gift.taken}</td>
             <td>${gift.amount}</td>
             <td>${gift.institution}</td>
             <td><a href="/my-gifts/${gift.id}">Więcej informacji</a></td>

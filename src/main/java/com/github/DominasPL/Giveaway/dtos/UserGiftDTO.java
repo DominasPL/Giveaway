@@ -14,7 +14,8 @@ public class UserGiftDTO {
     private Long id;
     private Long amount;
     private String institution;
-
+    private String taken;
+    private String created;
 
 }
 

@@ -158,7 +158,10 @@ public class Converter {
             userGiftDTO.setId(gift.getId());
             userGiftDTO.setAmount(gift.getAmount());
             userGiftDTO.setInstitution(gift.getInstitution().getName());
+            userGiftDTO.setTaken(gift.getTaken());
+            userGiftDTO.setCreated(gift.getCreated());
             userGiftDTOS.add(userGiftDTO);
+
         }
 
         return userGiftDTOS;
