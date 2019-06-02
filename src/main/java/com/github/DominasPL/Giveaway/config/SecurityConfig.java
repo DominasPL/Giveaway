@@ -51,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/about-us").permitAll() // dostep dla wszystkich
                 .antMatchers("/organizations").permitAll() // dostep dla wszystkich
                 .antMatchers("/contact").permitAll() // dostep dla wszystkich
+                .antMatchers("/register/confirm-account").anonymous()
                 .antMatchers("/").permitAll() // dostep dla wszystkich
 //                .antMatchers("/user", "/user/**").hasRole("USER") // tylko dla userow
                 .antMatchers("/admin", "/admin/**").hasRole("ADMIN") // tylko dla adminow

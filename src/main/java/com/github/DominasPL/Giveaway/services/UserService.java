@@ -6,6 +6,7 @@ import com.github.DominasPL.Giveaway.domain.repositories.*;
 import com.github.DominasPL.Giveaway.dtos.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.mail.MailException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +28,10 @@ public class UserService {
     private LocationService locationService;
     private InstitutionRepository institutionRepository;
     private AddressRepository addressRepository;
+    private EmailService emailService;
+    private ConfirmationTokenRepository confirmationTokenRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, GiftRepository giftRepository, LocationService locationService, InstitutionRepository institutionRepository, AddressRepository addressRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, GiftRepository giftRepository, LocationService locationService, InstitutionRepository institutionRepository, AddressRepository addressRepository, EmailService emailService, ConfirmationTokenRepository confirmationTokenRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
@@ -36,6 +39,8 @@ public class UserService {
         this.locationService = locationService;
         this.institutionRepository = institutionRepository;
         this.addressRepository = addressRepository;
+        this.emailService = emailService;
+        this.confirmationTokenRepository = confirmationTokenRepository;
     }
 
     @Transactional
@@ -50,7 +55,18 @@ public class UserService {
         userDetails.setId(user.getId());
         userDetails.setFirstName("");
         user.setUserDetails(userDetails);
+        user.setActive(false);
         userRepository.save(user);
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(user);
+        confirmationTokenRepository.save(confirmationToken);
+
+        try {
+            logger.info("Wysyłanie emaila na adres email: " + user.getEmail());
+            emailService.sendNotification(user, confirmationToken);
+        } catch (MailException e) {
+            logger.info("Błąd podczas wysyłania wiadomości" + e.getMessage());
+        }
 
     }
 
@@ -66,14 +82,20 @@ public class UserService {
         userDetails.setId(user.getId());
         userDetails.setFirstName("");
         user.setUserDetails(userDetails);
+        user.setActive(true);
         userRepository.save(user);
     }
 
     @Transactional
     public void deleteUser(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        User admin = optionalUser.orElse(null);
-        userRepository.delete(admin);
+        User user = optionalUser.orElse(null);
+        Optional<ConfirmationToken> tokenOptional = confirmationTokenRepository.findByUserId(user.getId());
+        ConfirmationToken confirmationToken = tokenOptional.orElse(null);
+        if (confirmationToken != null) {
+            confirmationTokenRepository.delete(confirmationToken);
+        }
+        userRepository.delete(user);
     }
 
 
@@ -116,6 +138,17 @@ public class UserService {
         User user = optionalUser.orElse(null);
         user.setPassword(passwordEncoder.encode(form.getPassword()));
         userRepository.save(user);
+
+    }
+
+    @Transactional
+    public void activateUserAccount(ConfirmationToken token) {
+
+        Optional<User> optionalUser = userRepository.findByEmail(token.getUser().getEmail());
+        User user = optionalUser.orElse(null);
+        user.setActive(true);
+        userRepository.save(user);
+
 
     }
 
@@ -273,5 +306,6 @@ public class UserService {
         return userDTOWithGifts;
 
     }
+
 
 }
