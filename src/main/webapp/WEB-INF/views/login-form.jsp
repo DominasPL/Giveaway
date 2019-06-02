@@ -44,7 +44,7 @@
         <div class="form-group">
             <label>Hasło</label>
             <input type="password" class="form-control" name="password" required min="3" max="20" placeholder="Podaj hasło">
-            <a href="#" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
+            <a href="/password-reset" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
         </div>
 
         <div class="form-group form-group--buttons">

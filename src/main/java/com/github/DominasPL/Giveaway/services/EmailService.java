@@ -1,6 +1,7 @@
 package com.github.DominasPL.Giveaway.services;
 
 import com.github.DominasPL.Giveaway.domain.entities.ConfirmationToken;
+import com.github.DominasPL.Giveaway.domain.entities.PasswordResetToken;
 import com.github.DominasPL.Giveaway.domain.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -24,6 +25,18 @@ public class EmailService {
         mail.setFrom("dominas1212@gmail.com");
         mail.setSubject("Nowa wiadomość ważna");
         mail.setText("To confirm your account please click here: " + "http://localhost:8090/register/confirm-account?token="+token.getConfirmationToken());
+
+        javaMailSender.send(mail);
+
+    }
+
+    public void sendNotification(User user, PasswordResetToken token) throws MailException {
+
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(user.getEmail());
+        mail.setFrom("dominas1212@gmail.com");
+        mail.setSubject("Nowa wiadomość ważna");
+        mail.setText("To reset your password please click here: " + "http://localhost:8090/password-reset/reset?token="+token.getPasswordResetToken());
 
         javaMailSender.send(mail);
 

@@ -30,8 +30,9 @@ public class UserService {
     private AddressRepository addressRepository;
     private EmailService emailService;
     private ConfirmationTokenRepository confirmationTokenRepository;
+    private PasswordResetTokenRepository passwordResetTokenRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, GiftRepository giftRepository, LocationService locationService, InstitutionRepository institutionRepository, AddressRepository addressRepository, EmailService emailService, ConfirmationTokenRepository confirmationTokenRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, GiftRepository giftRepository, LocationService locationService, InstitutionRepository institutionRepository, AddressRepository addressRepository, EmailService emailService, ConfirmationTokenRepository confirmationTokenRepository, PasswordResetTokenRepository passwordResetTokenRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
@@ -41,6 +42,7 @@ public class UserService {
         this.addressRepository = addressRepository;
         this.emailService = emailService;
         this.confirmationTokenRepository = confirmationTokenRepository;
+        this.passwordResetTokenRepository = passwordResetTokenRepository;
     }
 
     @Transactional
@@ -308,4 +310,28 @@ public class UserService {
     }
 
 
+    public void sendPasswordResetEmail(String email) {
+        if (email == null) {
+            throw new IllegalArgumentException("Email musi być podany");
+        }
+
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        User user = optionalUser.orElse(null);
+
+        if (user == null) {
+            logger.info("Nie znaleziono użytkownika!");
+        }
+
+        PasswordResetToken token = new PasswordResetToken(user);
+        passwordResetTokenRepository.save(token);
+
+        try {
+            logger.info("Wysyłanie emaila na adres email: " + user.getEmail());
+            emailService.sendNotification(user, token);
+        } catch (MailException e) {
+            logger.info("Błąd podczas wysyłania wiadomości" + e.getMessage());
+        }
+
+
+    }
 }

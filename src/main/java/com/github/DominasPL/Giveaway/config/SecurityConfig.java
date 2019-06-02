@@ -46,12 +46,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 //tak jak w bolku try catch od najbardziej szczegółowych do najmniej
                 .antMatchers("/register").anonymous() // dostep dla niezalogowanych
+                .antMatchers("/register/confirm-account").anonymous()
                 .antMatchers("/login").anonymous() // dostep dla niezalogowanych
+                .antMatchers("/password-reset").anonymous() // dostep dla niezalogowanych
+                .antMatchers("/password-reset/reset").anonymous() // dostep dla niezalogowanych
                 .antMatchers("/about-service").permitAll() // dostep dla wszystkich
                 .antMatchers("/about-us").permitAll() // dostep dla wszystkich
                 .antMatchers("/organizations").permitAll() // dostep dla wszystkich
                 .antMatchers("/contact").permitAll() // dostep dla wszystkich
-                .antMatchers("/register/confirm-account").anonymous()
                 .antMatchers("/").permitAll() // dostep dla wszystkich
 //                .antMatchers("/user", "/user/**").hasRole("USER") // tylko dla userow
                 .antMatchers("/admin", "/admin/**").hasRole("ADMIN") // tylko dla adminow

@@ -83,7 +83,6 @@ public class RegistrationController {
 
         return "account-verified";
 
-
     }
 
     public boolean checkEmailIsAvailable(RegistrationFormDTO form) {
