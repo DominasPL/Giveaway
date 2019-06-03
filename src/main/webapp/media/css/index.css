@@ -1,0 +1,23 @@
+.about {
+    background-image: url("/media/images/about-us.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Dosis', sans-serif;
+}
+
+#text {
+    text-align: center;
+}
+
+.outer-div {
+    padding: 400px;
+    color: white;
+    margin: 0 auto;
+}
+
+.inner-div {
+    max-width: 600px;
+    height: 400px;
+    margin: 0 auto;
+    font-size: 250%;
+}

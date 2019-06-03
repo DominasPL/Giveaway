@@ -1,20 +1,12 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: dominik
-  Date: 6/3/19
-  Time: 1:02 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Header</title>
 </head>
 <body>
-
-<header>
+<header class="header--main-page">
     <nav class="container container--70">
         <sec:authorize access="!isAuthenticated()">
             <ul class="nav--actions">
@@ -45,7 +37,23 @@
             <li><a href="/contact" class="btn btn--without-border">Kontakt</a></li>
         </ul>
     </nav>
+
+    <div class="slogan container container--90">
+        <div class="slogan--item">
+            <h1>
+                Zacznij pomagać!<br />
+                Oddaj niechciane rzeczy w zaufane ręce
+            </h1>
+
+            <ul class="slogan--buttons">
+                <li><a href="/gift" class="btn btn--large">Oddaj rzeczy</a></li>
+                <li><a href="#" class="btn btn--large">Zorganizuj zbiórkę</a></li>
+            </ul>
+        </div>
+    </div>
 </header>
+
+<script src="/media/js/app.js"></script>
 
 </body>
 </html>

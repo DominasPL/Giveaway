@@ -11,52 +11,8 @@
     <link rel="stylesheet" href="/media/css/style.css" />
 </head>
 <body>
-<header class="header--main-page">
-    <nav class="container container--70">
-        <sec:authorize access="!isAuthenticated()">
-        <ul class="nav--actions">
-            <li><a href="/login" class="btn btn--small btn--without-border">Zaloguj</a></li>
-            <li><a href="/register" class="btn btn--small btn--highlighted">Załóż konto</a></li>
-        </ul>
-        </sec:authorize>
 
-        <sec:authorize access="isAuthenticated()">
-            <ul class="nav--actions">
-                <li class="logged-user">
-                    Witaj ${firstName}
-                    <ul class="dropdown">
-                        <li><a href="/profile">Profil</a></li>
-                        <li><a href="#">Ustawienia</a></li>
-                        <li><a href="/my-gifts">Moje dary</a></li>
-                        <li><a href="/logout">Wyloguj</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </sec:authorize>
-
-        <ul>
-            <li><a href="/" class="btn btn--without-border active">Start</a></li>
-            <li><a href="/about-service" class="btn btn--without-border">O co chodzi?</a></li>
-            <li><a href="/about-us" class="btn btn--without-border">O nas</a></li>
-            <li><a href="/organizations" class="btn btn--without-border">Fundacje i organizacje</a></li>
-            <li><a href="/contact" class="btn btn--without-border">Kontakt</a></li>
-        </ul>
-    </nav>
-
-    <div class="slogan container container--90">
-        <div class="slogan--item">
-            <h1>
-                Zacznij pomagać!<br />
-                Oddaj niechciane rzeczy w zaufane ręce
-            </h1>
-
-            <ul class="slogan--buttons">
-                <li><a href="/gift" class="btn btn--large">Oddaj rzeczy</a></li>
-                <li><a href="#" class="btn btn--large">Zorganizuj zbiórkę</a></li>
-            </ul>
-        </div>
-    </div>
-</header>
+<jsp:include page="../elements/header.jsp"/>
 
 <section class="stats">
     <div class="container container--85">
@@ -106,7 +62,7 @@
         </div>
     </div>
 
-    <a href="#" class="btn btn--large">Załóż konto</a>
+    <a href="/register" class="btn btn--large">Załóż konto</a>
 </section>
 
 <section class="about-us">
@@ -250,31 +206,8 @@
     </div>
 </section>
 
-<footer>
-    <div class="contact">
-        <h2>Skontaktuj się z nami</h2>
-        <h3>Formularz kontaktowy</h3>
-        <form class="form--contact">
-            <div class="form-group form-group--50"><input type="text" name="name" placeholder="Imię" /></div>
-            <div class="form-group form-group--50"><input type="text" name="surname" placeholder="Nazwisko" /></div>
+<jsp:include page="../elements/footer.jsp"/>
 
-            <div class="form-group"><textarea name="message" placeholder="Wiadomość" rows="1"></textarea></div>
 
-            <button class="btn" type="submit">Wyślij</button>
-        </form>
-    </div>
-    <div class="bottom-line">
-        <span class="bottom-line--copy">Copyright &copy; 2018</span>
-        <div class="bottom-line--icons">
-            <a href="#" class="btn btn--small"><img src="/media/images/icon-facebook.svg"/></a> <a href="#" class="btn btn--small"><img src="/media/images/icon-instagram.svg"/></a>
-        </div>
-    </div>
-</footer>
-
-<script src="/media/js/app.js"></script>
 </body>
 </html>
-
-<%--<sec:authorize access="hasRole('ADMIN')">--%>
-    <%--<p>Dla zalogowanego z rolą ADMIN</p>--%>
-<%--</sec:authorize>--%>
