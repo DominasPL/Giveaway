@@ -47,7 +47,6 @@ public class PasswordResetController {
             return "reset-email";
         }
 
-        //TODO WYSYLANIE MAILA RESETUJACEGO
         userService.sendPasswordResetEmail(emailDTO.getEmail());
 
         model.addAttribute("email", emailDTO.getEmail());
@@ -70,14 +69,29 @@ public class PasswordResetController {
         return "reset-password-error";
     }
 
-   //TODO ZROBIC POSTMAPPING DO RESET
+    @PostMapping("/reset")
+    public String changePassword(@Valid @ModelAttribute("form") ChangePasswordDTO form, @RequestParam("token") String passwordResetToken, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "change-password";
+        }
+
+        if (!checkPasswordsEquality(form)) {
+            result.rejectValue("password", null, "Hasła są niezgodne");
+            return "change-password";
+        }
+
+        PasswordResetToken token = passwordResetTokenRepository.findByPasswordResetToken(passwordResetToken);
+
+        userService.changePassword(token.getUser().getId(), form);
+
+        return "redirect:/login";
+    }
+
 
     public boolean checkPasswordsEquality(ChangePasswordDTO form) {
         return form.getPassword().equals(form.getConfirmedPassword());
     }
-
-
-
 
 
     public boolean checkIsEmailInDatabase(String email) {
