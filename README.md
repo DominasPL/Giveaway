@@ -4,7 +4,7 @@
 ## Introduction
 An application where you can give unused things to charities and foundations. The idea was that to encourage everyone to help homeless, poor, disabled people giving things like clothes, food etc. to charities and foundations. User can create a new gift choosing what kind of things would like to give, amount, town, which group would like to support, available institution from institution list, address and date of receipt. There is an admin panel where you can manage admins, users, institutions and gifts.
 
-Photo
+![giveaway2](https://user-images.githubusercontent.com/47396707/59111248-eedec580-8940-11e9-983f-d01877e5ba13.jpg)
 
 ## Technologies
 - Java
